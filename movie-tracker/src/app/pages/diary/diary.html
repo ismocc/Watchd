@@ -28,7 +28,7 @@
           <a [routerLink]="['/movie', log.tmdbId]">{{ log.movie.title }}</a>
           <span class="muted"> {{ log.movie.releaseDate?.slice(0, 4) }}</span>
           <p class="small">
-            {{ log.rating | stars }}
+            <span class="stars">{{ log.rating | stars }}</span>
             @if (log.liked) {
               <span class="liked">♥</span>
             }

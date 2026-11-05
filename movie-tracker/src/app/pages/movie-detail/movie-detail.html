@@ -27,7 +27,7 @@
           <p class="small">
             Watched {{ logs().length === 1 ? 'once' : logs().length + ' times' }}
             @if (lastRating()) {
-              · {{ lastRating() | stars }}
+              · <span class="stars">{{ lastRating() | stars }}</span>
             }
             @if (liked()) {
               <span class="liked">♥</span>
@@ -64,7 +64,7 @@
     @for (log of logs(); track log.id) {
       <div class="log small">
         <span class="muted">{{ log.watchedDate | date: 'mediumDate' : 'UTC' }}</span>
-        · {{ log.rating | stars }}
+        · <span class="stars">{{ log.rating | stars }}</span>
         @if (log.liked) {
           <span class="liked">♥</span>
         }

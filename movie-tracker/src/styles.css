@@ -1,19 +1,21 @@
-/* colors from the watchd logo */
+/* plain greys, red + gold from the logo */
 :root {
-  --bg: #fdfaf3;
-  --fg: #15120f;
-  --muted: #857e72;
-  --line: #ebe4d6;
+  --bg: #ffffff;
+  --fg: #111111;
+  --muted: #737373;
+  --line: #e8e8e8;
   --red: #d7443a;
+  --gold: #e0a020;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #15120f;
-    --fg: #fff3d6;
-    --muted: #91887a;
-    --line: #2c2620;
-    --red: #e0564c;
+    --bg: #0f0f0f;
+    --fg: #f2f2f2;
+    --muted: #8a8a8a;
+    --line: #262626;
+    --red: #e5574d;
+    --gold: #f2b33d;
   }
 }
 
@@ -69,6 +71,10 @@ img {
 
 .liked {
   color: var(--red);
+}
+
+.stars {
+  color: var(--gold);
 }
 
 .small {
@@ -364,7 +370,7 @@ a:hover .poster {
   top: 0;
   left: 0;
   overflow: hidden;
-  color: var(--fg);
+  color: var(--gold);
   pointer-events: none;
 }
 
