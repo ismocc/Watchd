@@ -1,0 +1,111 @@
+@if (error()) {
+  <p class="error">{{ error() }}</p>
+} @else if (movie(); as movie) {
+  <div class="movie">
+    @if (movie.posterPath) {
+      <img class="poster" [src]="'https://image.tmdb.org/t/p/w500' + movie.posterPath" [alt]="movie.title" />
+    } @else {
+      <div class="poster"></div>
+    }
+
+    <div>
+      <h1>{{ movie.title }} <span class="muted">{{ movie.releaseDate.slice(0, 4) }}</span></h1>
+      @if (movie.director) {
+        <p class="muted">Directed by {{ movie.director }}</p>
+      }
+
+      <p class="overview">{{ movie.overview }}</p>
+      <p class="muted small">
+        @if (movie.runtime) {
+          {{ movie.runtime }} mins ·
+        }
+        {{ movie.genres.join(', ') }}
+      </p>
+
+      <div class="actions stack">
+        @if (logs().length > 0) {
+          <p class="small">
+            Watched {{ logs().length === 1 ? 'once' : logs().length + ' times' }}
+            @if (lastRating()) {
+              · {{ lastRating() | stars }}
+            }
+            @if (liked()) {
+              <span class="liked">♥</span>
+            }
+          </p>
+        }
+
+        <div class="row">
+          <button (click)="showLogForm.set(true)">{{ logs().length > 0 ? 'Log again' : 'Log' }}</button>
+        </div>
+
+        @if (lists().length > 0) {
+          <div class="row" style="flex-wrap: nowrap">
+            <select [(ngModel)]="selectedList" (ngModelChange)="listMessage.set('')">
+              <option [ngValue]="null" disabled>Add to list...</option>
+              @for (list of lists(); track list.id) {
+                <option [ngValue]="list.id">{{ list.name }}</option>
+              }
+            </select>
+            <button (click)="addToList()" [disabled]="!selectedList">Add</button>
+          </div>
+        } @else {
+          <p class="muted small">Make a list first to add this movie to it.</p>
+        }
+        @if (listMessage()) {
+          <p class="small">{{ listMessage() }}</p>
+        }
+      </div>
+    </div>
+  </div>
+
+  @if (logs().length > 0) {
+    <h2>Your activity</h2>
+    @for (log of logs(); track log.id) {
+      <div class="log small">
+        <span class="muted">{{ log.watchedDate | date: 'mediumDate' : 'UTC' }}</span>
+        · {{ log.rating | stars }}
+        @if (log.liked) {
+          <span class="liked">♥</span>
+        }
+        @if (log.rewatch) {
+          <span class="muted">· rewatch</span>
+        }
+        @if (log.review) {
+          <p>{{ log.review }}</p>
+        }
+      </div>
+    }
+  }
+
+  @if (movie.cast.length > 0) {
+    <h2>Cast</h2>
+    <div class="grid tight small">
+      @for (person of movie.cast; track person.id) {
+        <div>
+          @if (person.profilePath) {
+            <img class="poster" [src]="'https://image.tmdb.org/t/p/w185' + person.profilePath" [alt]="person.name" loading="lazy" />
+          } @else {
+            <div class="poster"></div>
+          }
+          <p class="title">{{ person.name }}</p>
+          <p class="muted">{{ person.character }}</p>
+        </div>
+      }
+    </div>
+  }
+
+  @if (showLogForm()) {
+    <app-log-form
+      [tmdbId]="movie.id"
+      [title]="movie.title"
+      [year]="movie.releaseDate"
+      [poster]="movie.posterPath"
+      [seenBefore]="logs().length > 0"
+      (saved)="onLogged()"
+      (closed)="showLogForm.set(false)"
+    />
+  }
+} @else {
+  <p class="muted">Loading...</p>
+}

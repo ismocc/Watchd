@@ -1,0 +1,33 @@
+<div class="overlay" (click)="closed.emit()">
+  <form class="modal stack" (click)="$event.stopPropagation()" (ngSubmit)="save()">
+    <div>
+      <p class="muted small">{{ log ? 'Edit log' : 'I watched...' }}</p>
+      <h1>{{ title }} <span class="muted">{{ year?.slice(0, 4) }}</span></h1>
+    </div>
+
+    <div class="row">
+      <input type="date" name="watchedDate" [(ngModel)]="watchedDate" [max]="today" required />
+      <label class="row small">
+        <input type="checkbox" name="rewatch" [(ngModel)]="rewatch" />
+        Rewatch
+      </label>
+      <label class="row small">
+        <input type="checkbox" name="liked" [(ngModel)]="liked" />
+        <span class="liked">♥</span> Liked
+      </label>
+    </div>
+
+    <app-star-rating [(value)]="rating" />
+
+    <textarea name="review" [(ngModel)]="review" rows="5" placeholder="Review (optional)"></textarea>
+
+    @if (error()) {
+      <p class="error small">{{ error() }}</p>
+    }
+
+    <div class="row">
+      <button type="submit" [disabled]="saving() || !watchedDate">{{ saving() ? 'Saving...' : 'Save' }}</button>
+      <button type="button" class="link" (click)="closed.emit()">Cancel</button>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,20 @@
+<div class="row">
+  <div (mouseleave)="hover.set(null)">
+    @for (star of stars; track star) {
+      <span class="star">★<span class="fill" [style.width]="fill(star)">★</span><span
+          class="half"
+          (mouseenter)="hover.set(star - 0.5)"
+          (click)="pick(star - 0.5)"></span><span
+          class="half"
+          (mouseenter)="hover.set(star)"
+          (click)="pick(star)"></span></span>
+    }
+  </div>
+  <span class="muted small">
+    @if (hover() ?? value; as shown) {
+      {{ shown }} / 5
+    } @else {
+      no rating
+    }
+  </span>
+</div>

@@ -1,0 +1,14 @@
+<nav>
+  <a routerLink="/" class="logo">MovieTracker</a>
+
+  @if (auth.user(); as user) {
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+    <a routerLink="/diary" routerLinkActive="active">Diary</a>
+    <a routerLink="/lists" routerLinkActive="active">Lists</a>
+    <a routerLink="/profile" routerLinkActive="active">{{ user.username }}</a>
+    <button class="link right" (click)="auth.logout()">Log out</button>
+  } @else if (!auth.isLoggedIn()) {
+    <a routerLink="/login" routerLinkActive="active" class="right">Log in</a>
+    <a routerLink="/register" routerLinkActive="active">Sign up</a>
+  }
+</nav>

@@ -1,0 +1,55 @@
+<h1>Diary</h1>
+
+@if (error()) {
+  <p class="error">{{ error() }}</p>
+} @else if (loading()) {
+  <p class="muted">Loading...</p>
+} @else if (logs().length === 0) {
+  <p class="muted">Nothing logged yet. Find a movie on the <a routerLink="/">home page</a> and hit Log.</p>
+} @else {
+  <p class="muted">{{ logs().length }} entries</p>
+
+  @for (month of months(); track month.label) {
+    <h2>{{ month.label }}</h2>
+
+    @for (log of month.logs; track log.id) {
+      <div class="entry">
+        <span class="day">{{ log.watchedDate | date: 'd' : 'UTC' }}</span>
+
+        <a [routerLink]="['/movie', log.tmdbId]">
+          @if (log.movie.posterPath) {
+            <img class="poster" [src]="'https://image.tmdb.org/t/p/w92' + log.movie.posterPath" [alt]="log.movie.title" loading="lazy" />
+          } @else {
+            <div class="poster"></div>
+          }
+        </a>
+
+        <div class="info">
+          <a [routerLink]="['/movie', log.tmdbId]">{{ log.movie.title }}</a>
+          <span class="muted"> {{ log.movie.releaseDate?.slice(0, 4) }}</span>
+          <p class="small">
+            {{ log.rating | stars }}
+            @if (log.liked) {
+              <span class="liked">♥</span>
+            }
+            @if (log.rewatch) {
+              <span class="muted">· rewatch</span>
+            }
+          </p>
+          @if (log.review) {
+            <p class="small muted">{{ log.review }}</p>
+          }
+        </div>
+
+        <div class="row small">
+          <button class="link" (click)="editing.set(log)">Edit</button>
+          <button class="link" (click)="remove(log)">Delete</button>
+        </div>
+      </div>
+    }
+  }
+}
+
+@if (editing(); as log) {
+  <app-log-form [log]="log" (saved)="onSaved()" (closed)="editing.set(null)" />
+}

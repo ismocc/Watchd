@@ -1,0 +1,18 @@
+<div class="narrow">
+  <h1 class="mb">Log in</h1>
+
+  <form class="stack" (ngSubmit)="submit()">
+    <input type="email" name="email" [(ngModel)]="email" placeholder="Email" required />
+    <input type="password" name="password" [(ngModel)]="password" placeholder="Password" required />
+
+    @if (error()) {
+      <p class="error small">{{ error() }}</p>
+    }
+
+    <button type="submit" [disabled]="loading() || !email || !password">
+      {{ loading() ? 'Logging in...' : 'Log in' }}
+    </button>
+  </form>
+
+  <p class="muted small" style="margin-top: 20px">No account yet? <a routerLink="/register">Sign up</a></p>
+</div>

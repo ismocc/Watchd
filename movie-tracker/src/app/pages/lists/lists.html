@@ -1,0 +1,40 @@
+<div class="row spread mb">
+  <h1>Lists</h1>
+  <button (click)="showForm.set(!showForm())">{{ showForm() ? 'Cancel' : 'New list' }}</button>
+</div>
+
+@if (showForm()) {
+  <form class="stack mb" (ngSubmit)="create()">
+    <input name="name" [(ngModel)]="name" placeholder="Name" required />
+    <textarea name="description" [(ngModel)]="description" placeholder="Description (optional)" rows="3"></textarea>
+    <div><button type="submit" [disabled]="!name.trim()">Create</button></div>
+  </form>
+}
+
+@if (error()) {
+  <p class="error mb">{{ error() }}</p>
+}
+
+@if (loading()) {
+  <p class="muted">Loading...</p>
+} @else if (lists().length === 0) {
+  <p class="muted">You don't have any lists yet.</p>
+} @else {
+  <div class="grid" style="grid-template-columns: repeat(auto-fill, minmax(220px, 1fr))">
+    @for (list of lists(); track list.id) {
+      <a [routerLink]="['/lists', list.id]">
+        <div class="strip">
+          @for (item of list.items; track item.id) {
+            @if (item.movie.posterPath) {
+              <img class="poster" [src]="'https://image.tmdb.org/t/p/w154' + item.movie.posterPath" [alt]="item.movie.title" />
+            } @else {
+              <div class="poster"></div>
+            }
+          }
+        </div>
+        <p class="title">{{ list.name }}</p>
+        <p class="muted small">{{ list._count?.items ?? 0 }} {{ list._count?.items === 1 ? 'film' : 'films' }}</p>
+      </a>
+    }
+  </div>
+}

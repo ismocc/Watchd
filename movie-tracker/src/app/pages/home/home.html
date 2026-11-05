@@ -1,0 +1,23 @@
+<input class="mb" placeholder="Search a movie..." (input)="onSearch($event)" />
+
+<h2>{{ query() ? 'Results for "' + query() + '"' : 'Trending this week' }}</h2>
+
+@if (error()) {
+  <p class="error">{{ error() }}</p>
+} @else if (loading()) {
+  <p class="muted">Loading...</p>
+} @else if (movies().length === 0) {
+  <p class="muted">No movies found.</p>
+} @else {
+  <div class="grid">
+    @for (movie of movies(); track movie.id) {
+      <app-movie-card
+        [id]="movie.id"
+        [title]="movie.title"
+        [rating]="movie.voteAverage"
+        [year]="movie.releaseDate"
+        [poster]="movie.posterPath"
+      />
+    }
+  </div>
+}

@@ -1,0 +1,20 @@
+<div class="narrow">
+  <h1 class="mb">Sign up</h1>
+
+  <form class="stack" (ngSubmit)="submit()">
+    <input type="email" name="email" [(ngModel)]="email" placeholder="Email" required />
+    <input name="username" [(ngModel)]="username" placeholder="Username" required />
+    <input type="password" name="password" [(ngModel)]="password" placeholder="Password (6+ characters)" required />
+    <input name="inviteCode" [(ngModel)]="inviteCode" placeholder="Invite code (if you got one)" />
+
+    @if (error()) {
+      <p class="error small">{{ error() }}</p>
+    }
+
+    <button type="submit" [disabled]="loading() || !email || !username || !password">
+      {{ loading() ? 'Creating account...' : 'Create account' }}
+    </button>
+  </form>
+
+  <p class="muted small" style="margin-top: 20px">Already have an account? <a routerLink="/login">Log in</a></p>
+</div>

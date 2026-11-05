@@ -1,0 +1,66 @@
+@if (auth.user(); as user) {
+  <h1>{{ user.username }}</h1>
+  <p class="muted small">Member since {{ user.createdAt | date: 'MMMM y' }}</p>
+}
+
+@if (error()) {
+  <p class="error">{{ error() }}</p>
+} @else if (stats(); as stats) {
+  <div class="stats">
+    <p><b>{{ stats.filmsWatched }}</b> <span class="muted small">Films</span></p>
+    <p><b>{{ stats.thisYear }}</b> <span class="muted small">This year</span></p>
+    <p><b>{{ stats.hoursWatched }}</b> <span class="muted small">Hours</span></p>
+    <p>
+      <b>{{ stats.avgRating === null ? '-' : (stats.avgRating | number: '1.1-2') }}</b>
+      <span class="muted small">Avg rating</span>
+    </p>
+  </div>
+
+  <h2>Ratings</h2>
+  <div class="bars">
+    @for (count of stats.ratingSpread; track $index) {
+      <div [style.height]="barHeight(count)" [title]="count + ' x ' + (ratings[$index] | stars)"></div>
+    }
+  </div>
+  <div class="row spread muted small" style="max-width: 360px">
+    <span>½</span>
+    <span>★★★★★</span>
+  </div>
+
+  <h2>Recent</h2>
+  @if (stats.recent.length === 0) {
+    <p class="muted">Nothing yet. <a routerLink="/">Go log something</a>.</p>
+  } @else {
+    <div class="grid tight">
+      @for (log of stats.recent; track log.id) {
+        <a [routerLink]="['/movie', log.tmdbId]" [title]="log.movie.title">
+          @if (log.movie.posterPath) {
+            <img class="poster" [src]="'https://image.tmdb.org/t/p/w154' + log.movie.posterPath" [alt]="log.movie.title" />
+          } @else {
+            <div class="poster"></div>
+          }
+          <p class="small">{{ log.rating | stars }}</p>
+        </a>
+      }
+    </div>
+  }
+
+  <h2>Liked</h2>
+  @if (stats.favorites.length === 0) {
+    <p class="muted">Heart a film when you log it and it'll show up here.</p>
+  } @else {
+    <div class="grid tight">
+      @for (movie of stats.favorites; track movie.tmdbId) {
+        <a [routerLink]="['/movie', movie.tmdbId]" [title]="movie.title">
+          @if (movie.posterPath) {
+            <img class="poster" [src]="'https://image.tmdb.org/t/p/w154' + movie.posterPath" [alt]="movie.title" />
+          } @else {
+            <div class="poster"></div>
+          }
+        </a>
+      }
+    </div>
+  }
+} @else {
+  <p class="muted">Loading...</p>
+}

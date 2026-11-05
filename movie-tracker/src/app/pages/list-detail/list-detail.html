@@ -1,0 +1,48 @@
+<p class="small mb"><a routerLink="/lists" class="muted">← All lists</a></p>
+
+@if (error()) {
+  <p class="error">{{ error() }}</p>
+} @else if (list(); as list) {
+  @if (editing()) {
+    <form class="stack mb" (ngSubmit)="save()">
+      <input name="name" [(ngModel)]="name" required />
+      <textarea name="description" [(ngModel)]="description" rows="3" placeholder="Description"></textarea>
+      <div class="row">
+        <button type="submit">Save</button>
+        <button type="button" class="link" (click)="editing.set(false)">Cancel</button>
+      </div>
+    </form>
+  } @else {
+    <div class="mb">
+      <h1>{{ list.name }}</h1>
+      @if (list.description) {
+        <p>{{ list.description }}</p>
+      }
+      <div class="row small" style="margin-top: 8px">
+        <span class="muted">{{ list.items?.length ?? 0 }} films</span>
+        <button class="link" (click)="startEdit()">Edit</button>
+        <button class="link" (click)="deleteList()">Delete list</button>
+      </div>
+    </div>
+  }
+
+  @if (!list.items?.length) {
+    <p class="muted">This list is empty. Open any movie and use "Add to list".</p>
+  } @else {
+    <div class="grid">
+      @for (item of list.items; track item.id; let i = $index) {
+        <div>
+          <app-movie-card
+            [id]="item.tmdbId"
+            [title]="i + 1 + '. ' + item.movie.title"
+            [year]="item.movie.releaseDate"
+            [poster]="item.movie.posterPath"
+          />
+          <button class="link small" (click)="removeMovie(item.tmdbId)">remove</button>
+        </div>
+      }
+    </div>
+  }
+} @else {
+  <p class="muted">Loading...</p>
+}

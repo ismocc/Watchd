@@ -1,0 +1,14 @@
+<a [routerLink]="['/movie', id]">
+  @if (poster) {
+    <img class="poster" [src]="'https://image.tmdb.org/t/p/w342' + poster" [alt]="title" loading="lazy" />
+  } @else {
+    <div class="poster"></div>
+  }
+  <p class="title">{{ title }}</p>
+  <p class="muted small">
+    {{ year?.slice(0, 4) }}
+    @if (rating) {
+      · ★ {{ rating | number: '1.1-1' }}
+    }
+  </p>
+</a>
