@@ -7,7 +7,7 @@ WORKDIR /app
 COPY backend/package.json backend/pnpm-lock.yaml backend/pnpm-workspace.yaml backend/
 RUN cd backend && pnpm install --frozen-lockfile
 
-COPY movie-tracker/package.json movie-tracker/pnpm-lock.yaml movie-tracker/
+COPY movie-tracker/package.json movie-tracker/pnpm-lock.yaml movie-tracker/pnpm-workspace.yaml movie-tracker/
 RUN cd movie-tracker && pnpm install --frozen-lockfile
 
 COPY backend backend
