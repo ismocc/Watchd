@@ -1,0 +1,31 @@
+services:
+  db:
+    image: postgres:17
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: movietracker
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-movietracker}
+      POSTGRES_DB: movietracker
+    volumes:
+      - db:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U movietracker']
+      interval: 5s
+      retries: 10
+
+  app:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - '${PORT:-3000}:3000'
+    environment:
+      DATABASE_URL: postgresql://movietracker:${POSTGRES_PASSWORD:-movietracker}@db:5432/movietracker
+      JWT_SECRET: ${JWT_SECRET:?put JWT_SECRET in .env}
+      TMDB_API_KEY: ${TMDB_API_KEY:?put TMDB_API_KEY in .env}
+      INVITE_CODE: ${INVITE_CODE:-}
+
+volumes:
+  db:
