@@ -1,0 +1,73 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  email        String   @unique
+  username     String   @unique
+  passwordHash String   @map("password_hash")
+  createdAt    DateTime @default(now()) @map("created_at")
+  logs         Log[]
+  lists        List[]
+
+  @@map("users")
+}
+
+model Movie {
+  tmdbId      Int        @id @map("tmdb_id")
+  title       String
+  posterPath  String?    @map("poster_path")
+  releaseDate String?    @map("release_date")
+  runtime     Int?
+  logs        Log[]
+  listItems   ListItem[]
+
+  @@map("movies")
+}
+
+model Log {
+  id          Int      @id @default(autoincrement())
+  userId      Int      @map("user_id")
+  tmdbId      Int      @map("tmdb_id")
+  watchedDate DateTime @map("watched_date") @db.Date
+  rating      Float?
+  review      String?
+  liked       Boolean  @default(false)
+  rewatch     Boolean  @default(false)
+  createdAt   DateTime @default(now()) @map("created_at")
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  movie       Movie    @relation(fields: [tmdbId], references: [tmdbId])
+
+  @@index([userId, watchedDate])
+  @@map("logs")
+}
+
+model List {
+  id          Int        @id @default(autoincrement())
+  userId      Int        @map("user_id")
+  name        String
+  description String?
+  createdAt   DateTime   @default(now()) @map("created_at")
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items       ListItem[]
+
+  @@map("lists")
+}
+
+model ListItem {
+  id       Int   @id @default(autoincrement())
+  listId   Int   @map("list_id")
+  tmdbId   Int   @map("tmdb_id")
+  position Int
+  list     List  @relation(fields: [listId], references: [id], onDelete: Cascade)
+  movie    Movie @relation(fields: [tmdbId], references: [tmdbId])
+
+  @@unique([listId, tmdbId])
+  @@map("list_items")
+}
