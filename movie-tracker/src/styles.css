@@ -1,18 +1,19 @@
+/* colors from the watchd logo */
 :root {
-  --bg: #fbfaf7;
-  --fg: #1c1b19;
-  --muted: #85817a;
-  --line: #e7e4dd;
-  --red: #c53b2b;
+  --bg: #fdfaf3;
+  --fg: #15120f;
+  --muted: #857e72;
+  --line: #ebe4d6;
+  --red: #d7443a;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #151514;
-    --fg: #ebe9e4;
-    --muted: #8c8982;
-    --line: #2b2a28;
-    --red: #e5654f;
+    --bg: #15120f;
+    --fg: #fff3d6;
+    --muted: #91887a;
+    --line: #2c2620;
+    --red: #e0564c;
   }
 }
 
@@ -102,8 +103,18 @@ nav {
 }
 
 nav .logo {
-  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--fg);
   margin-right: 8px;
+}
+
+nav .logo img {
+  width: 28px;
+  height: 28px;
 }
 
 nav a,

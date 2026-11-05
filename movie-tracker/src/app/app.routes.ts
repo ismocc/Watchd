@@ -16,7 +16,7 @@ export const routes: Routes = [
     path: '',
     canActivate: [authGuard],
     children: [
-      { path: '', component: Home, title: 'MovieTracker' },
+      { path: '', component: Home, title: 'Watchd' },
       { path: 'movie/:id', component: MovieDetail, title: 'Movie' },
       { path: 'diary', component: Diary, title: 'Diary' },
       { path: 'lists', component: Lists, title: 'Lists' },

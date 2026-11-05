@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200.0 200.0" width="200" height="200"><rect width="200" height="200" rx="44" fill="#15120F"/><g transform="translate(0,-15)"><defs><clipPath id="wb"><polygon points="36,92 164,92 146,210 54,210"/></clipPath></defs>
+<g fill="#FFF3D6"><circle cx="55" cy="84" r="18"/><circle cx="80" cy="70" r="20"/><circle cx="106" cy="62" r="22"/><circle cx="131" cy="72" r="20"/><circle cx="150" cy="86" r="16"/><circle cx="68" cy="58" r="15"/><circle cx="118" cy="42" r="16"/><circle cx="92" cy="42" r="14"/><circle cx="141" cy="54" r="13"/></g>
+<g fill="#EBD3A0"><circle cx="84" cy="78" r="7"/><circle cx="124" cy="56" r="6"/><circle cx="60" cy="68" r="5"/></g>
+<g fill="#F2B33D"><circle cx="110" cy="74" r="6"/><circle cx="74" cy="50" r="4"/><circle cx="146" cy="74" r="4"/></g>
+<polygon points="36,92 164,92 146,210 54,210" fill="#FFF3D6"/>
+<g clip-path="url(#wb)" fill="#D7443A"><polygon points="36,92 52,92 65.5,210 54,210"/><polygon points="68,92 84,92 88.5,210 77,210"/><polygon points="100,92 116,92 111.5,210 100,210"/><polygon points="132,92 148,92 134.5,210 123,210"/></g>
+<rect x="30" y="86" width="140" height="14" rx="7" fill="#F2B33D"/>
+<circle cx="100" cy="154" r="29" fill="#15120F"/>
+<path d="M86 154 L96 165 L116 142" fill="none" stroke="#F2B33D" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></g></svg>

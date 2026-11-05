@@ -1,4 +1,6 @@
-# MovieTracker
+<img src="movie-tracker/public/favicon.svg" width="72" alt="" />
+
+# Watchd
 
 Letterboxd style movie diary im building to learn Angular + NestJS. You can log what you watch with half star ratings and reviews, make lists and see your stats.
 
@@ -24,7 +26,7 @@ Easiest way is with Docker. On the server:
 
 ```bash
 git clone <this repo>
-cd MovieTracker
+cd watchd
 cp .env.example .env
 ```
 
@@ -52,7 +54,7 @@ movies.yourdomain.com {
 }
 ```
 
-**Backup:** `docker compose exec db pg_dump -U movietracker movietracker > backup.sql`
+**Backup:** `docker compose exec db pg_dump -U watchd watchd > backup.sql`
 
 ## Running it for development
 
@@ -68,7 +70,7 @@ cp .env.example .env
 
 then fill in `.env`:
 
-- `DATABASE_URL` - your postgres connection string (make an empty `movietracker` database first)
+- `DATABASE_URL` - your postgres connection string (make an empty `watchd` database first)
 - `JWT_SECRET` - any long random string
 - `TMDB_API_KEY` - you can get one for free at https://www.themoviedb.org/settings/api
 
